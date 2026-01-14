@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
-import { Car, Calendar, CheckCircle, AlertCircle, Mail } from 'lucide-react';
+import { Car, Calendar, CheckCircle, AlertCircle, Mail, ChevronDown } from 'lucide-react';
 
 const emailSchema = z.object({
   email: z.string().email('Por favor ingresa un email válido'),
@@ -33,7 +33,16 @@ export function CarCalculator() {
     totalContributions: 0,
     totalInterest: 0,
     finalAmount: 0,
+    monthlyDetails: [] as Array<{
+      month: number;
+      contribution: number;
+      balanceBeforeInterest: number;
+      interest: number;
+      balanceAfterInterest: number;
+    }>,
   });
+
+  const [showMonthlyDetails, setShowMonthlyDetails] = useState(false);
 
   useEffect(() => {
     calculateResults();
@@ -120,38 +129,72 @@ export function CarCalculator() {
   const calculateResults = () => {
     const monthlyRate = annualReturn / 100 / 12;
     const targetAmount = carPrice;
-    let balance = currentSavings;
-    let months = 0;
-    let totalContributed = currentSavings;
 
-    if (balance >= targetAmount) {
+    // Edge case: Already have enough savings
+    if (currentSavings >= targetAmount) {
       setResults({
         monthsNeeded: 0,
         yearsNeeded: 0,
         totalContributions: currentSavings,
         totalInterest: 0,
-        finalAmount: currentSavings,
+        finalAmount: targetAmount,
+        monthlyDetails: [],
       });
       return;
     }
 
-    // Calculate months needed with compound interest
-    while (balance < targetAmount && months < 600) { // Max 50 years
-      balance = balance * (1 + monthlyRate) + monthlyContribution;
+    // Calculate iteratively: (balance + contribution) * (1 + rate) each month
+    let balance = currentSavings;
+    let months = 0;
+    let totalContributed = currentSavings;
+    const monthlyDetails: Array<{
+      month: number;
+      contribution: number;
+      balanceBeforeInterest: number;
+      interest: number;
+      balanceAfterInterest: number;
+    }> = [];
+
+    // Iterate month by month until we reach the target
+    while (balance < targetAmount && months < 600) {
+      // Add monthly contribution FIRST
+      balance = balance + monthlyContribution;
       totalContributed += monthlyContribution;
+
+      const balanceBeforeInterest = balance;
+
+      // Then apply interest to the total
+      balance = balance * (1 + monthlyRate);
+
+      const interestEarned = balance - balanceBeforeInterest;
+
       months++;
+
+      // Store monthly detail
+      monthlyDetails.push({
+        month: months,
+        contribution: monthlyContribution,
+        balanceBeforeInterest: balanceBeforeInterest,
+        interest: interestEarned,
+        balanceAfterInterest: balance,
+      });
     }
 
-    const years = Math.floor(months / 12);
-    const remainingMonths = months % 12;
-    const totalInterest = balance - totalContributed;
+    const years = months / 12;
+
+    // Sum all the interest earned month by month
+    const totalInterest = monthlyDetails.reduce((sum, detail) => sum + detail.interest, 0);
+
+    // Final amount is the actual balance reached (might be slightly over target)
+    const finalAmount = balance;
 
     setResults({
       monthsNeeded: months,
-      yearsNeeded: years + (remainingMonths > 0 ? remainingMonths / 12 : 0),
+      yearsNeeded: years,
       totalContributions: totalContributed,
       totalInterest: totalInterest,
-      finalAmount: balance,
+      finalAmount: finalAmount,
+      monthlyDetails: monthlyDetails,
     });
   };
 
@@ -390,24 +433,29 @@ export function CarCalculator() {
               <h3 className="text-sm font-semibold mb-3">Desglose</h3>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Ahorro actual</span>
+                  <span className="text-muted-foreground">Ahorro inicial</span>
                   <span className="font-semibold">{formatCurrency(currentSavings)}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Falta ahorrar</span>
-                  <span className="font-semibold">{formatCurrency(Math.max(0, carPrice - currentSavings))}</span>
+                  <span className="text-muted-foreground">Aportes mensuales</span>
+                  <span className="font-semibold">{formatCurrency(results.totalContributions - currentSavings)}</span>
                 </div>
-                <div className="border-t pt-3 space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground">Total aportado</span>
-                    <span className="font-semibold">{formatCurrency(results.totalContributions)}</span>
+                <div className="flex justify-between items-center">
+                  <span className="text-muted-foreground">Intereses ganados</span>
+                  <span className="font-semibold text-primary">
+                    +{formatCurrency(results.totalInterest)}
+                  </span>
+                </div>
+                <div className="border-t pt-3">
+                  <div className="flex justify-between items-center font-semibold">
+                    <span>Total final</span>
+                    <span className="text-primary">{formatCurrency(results.finalAmount)}</span>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground">Intereses</span>
-                    <span className="font-semibold text-primary">
-                      +{formatCurrency(results.totalInterest)}
-                    </span>
-                  </div>
+                  {currentSavings > 0 && (
+                    <p className="text-xs text-muted-foreground mt-2">
+                      Tu ahorro inicial te ayuda a llegar {results.monthsNeeded > 0 ? Math.round((currentSavings / monthlyContribution)) : 0} meses más rápido
+                    </p>
+                  )}
                 </div>
               </div>
             </Card>
@@ -459,6 +507,52 @@ export function CarCalculator() {
                 </div>
               </div>
             </Card>
+
+            {/* Monthly Details - Collapsible */}
+            {results.monthlyDetails.length > 0 && (
+              <Card className="p-5">
+                <button
+                  onClick={() => setShowMonthlyDetails(!showMonthlyDetails)}
+                  className="w-full flex items-center justify-between text-sm font-semibold mb-3 hover:text-primary transition-colors"
+                >
+                  <span>Detalle Mensual ({results.monthlyDetails.length} meses)</span>
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform ${showMonthlyDetails ? 'rotate-180' : ''}`}
+                  />
+                </button>
+
+                {showMonthlyDetails && (
+                  <div className="space-y-2 max-h-80 overflow-y-auto">
+                    {results.monthlyDetails.map((detail) => (
+                      <div
+                        key={detail.month}
+                        className="border border-border rounded-lg p-3 text-xs space-y-1 bg-background/50"
+                      >
+                        <div className="font-semibold text-primary mb-2">
+                          Mes {detail.month}
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Aportación:</span>
+                          <span className="font-medium">{formatCurrency(detail.contribution)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Balance:</span>
+                          <span className="font-medium">{formatCurrency(detail.balanceBeforeInterest)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Interés ganado:</span>
+                          <span className="font-medium text-green-600">+{formatCurrency(detail.interest)}</span>
+                        </div>
+                        <div className="flex justify-between border-t pt-1 mt-1">
+                          <span className="text-muted-foreground font-semibold">Total al final:</span>
+                          <span className="font-semibold">{formatCurrency(detail.balanceAfterInterest)}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </Card>
+            )}
           </div>
 
           {/* Email Form Overlay - Positioned absolutely on top */}

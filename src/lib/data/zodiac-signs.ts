@@ -1,0 +1,388 @@
+import type { ZodiacSign, ZodiacSignInfo } from '../types/zodiac';
+
+export const zodiacSignsInfo: Record<ZodiacSign, ZodiacSignInfo> = {
+  aries: {
+    name: 'Aries Financiero',
+    tagline: 'El Inversionista Impulsivo',
+    emoji: '♈',
+    color: '#FF6B6B',
+    description:
+      'Eres audaz y decidido con tu dinero. Tomas decisiones financieras rápidas y no temes tomar riesgos. Tu energía te impulsa a buscar oportunidades de inversión emocionantes.',
+    characteristics: [
+      'Compras por impulso cuando algo te emociona',
+      'Prefieres invertir en experiencias sobre bienes materiales',
+      'Te gusta ser el primero en probar nuevos productos',
+      'Actúas rápido en oportunidades financieras',
+    ],
+    strengths: [
+      'Valentía para tomar riesgos calculados',
+      'Capacidad de actuar rápidamente en oportunidades',
+      'Mentalidad emprendedora natural',
+    ],
+    weaknesses: [
+      'Tendencia a compras impulsivas',
+      'Falta de paciencia en inversiones a largo plazo',
+      'Puede ignorar el análisis detallado',
+    ],
+    recommendations: [
+      'Implementa una regla de 24 horas antes de compras grandes',
+      'Destina 10% de tu presupuesto a "gastos impulsivos" controlados',
+      'Considera inversiones de alto riesgo solo con dinero que puedas perder',
+      'Usa apps de ahorro automático para compensar tus impulsos',
+    ],
+    compatibleSigns: ['leo', 'sagitario', 'geminis'],
+    avoidSigns: ['cancer', 'virgo'],
+  },
+  tauro: {
+    name: 'Tauro Financiero',
+    tagline: 'El Ahorrador Conservador',
+    emoji: '♉',
+    color: '#6BCF7F',
+    description:
+      'Eres prudente y constante con tus finanzas. Valoras la seguridad financiera por encima de todo y prefieres construir riqueza lentamente pero con solidez.',
+    characteristics: [
+      'Solo compras si está en descuento',
+      'Prefieres bienes raíces e inversiones tangibles',
+      'Ahorras consistentemente cada mes',
+      'Investigas exhaustivamente antes de gastar',
+    ],
+    strengths: [
+      'Disciplina excepcional en el ahorro',
+      'Paciencia para inversiones a largo plazo',
+      'Excelente en detectar valor real',
+    ],
+    weaknesses: [
+      'Puede ser demasiado conservador',
+      'Miedo excesivo al riesgo',
+      'Dificultad para disfrutar el dinero',
+    ],
+    recommendations: [
+      'Permítete un "fondo de diversión" mensual',
+      'Explora inversiones moderadamente riesgosas (5-10% del portafolio)',
+      'Invierte en bienes raíces o REITs',
+      'Considera abrir una cuenta de alto rendimiento',
+    ],
+    compatibleSigns: ['virgo', 'capricornio', 'cancer'],
+    avoidSigns: ['sagitario', 'acuario'],
+  },
+  geminis: {
+    name: 'Géminis Financiero',
+    tagline: 'El Diversificador Curioso',
+    emoji: '♊',
+    color: '#FFD93D',
+    description:
+      'Tu mente inquieta te lleva a diversificar constantemente. Te encanta investigar nuevas oportunidades y mantener múltiples flujos de ingreso.',
+    characteristics: [
+      'Tienes inversiones en múltiples plataformas',
+      'Cambias frecuentemente de estrategias',
+      'Te gustan las mini inversiones experimentales',
+      'Siempre estás aprendiendo sobre finanzas',
+    ],
+    strengths: [
+      'Excelente diversificación natural',
+      'Adaptabilidad a cambios del mercado',
+      'Amplio conocimiento financiero',
+    ],
+    weaknesses: [
+      'Falta de enfoque en una estrategia',
+      'Puede sobre-diversificar',
+      'Tendencia a perseguir la última moda',
+    ],
+    recommendations: [
+      'Establece 3 pilares principales de inversión',
+      'Limita nuevas inversiones a una por trimestre',
+      'Usa fondos indexados para simplificar',
+      'Dedica tiempo a profundizar en tus inversiones actuales',
+    ],
+    compatibleSigns: ['libra', 'acuario', 'aries'],
+    avoidSigns: ['virgo', 'piscis'],
+  },
+  cancer: {
+    name: 'Cáncer Financiero',
+    tagline: 'El Protector Familiar',
+    emoji: '♋',
+    color: '#A8DADC',
+    description:
+      'La seguridad de tu familia es tu prioridad. Construyes fondos de emergencia robustos y te aseguras de que tus seres queridos estén protegidos.',
+    characteristics: [
+      'Fondo de emergencia es tu prioridad #1',
+      'Inviertes en seguros de vida y salud',
+      'Prefieres quedarte en casa que salir a gastar',
+      'Ahorras para el futuro de tu familia',
+    ],
+    strengths: [
+      'Excelente planificación para emergencias',
+      'Mentalidad de protección financiera',
+      'Lealtad a estrategias probadas',
+    ],
+    weaknesses: [
+      'Excesiva aversión al riesgo',
+      'Puede sacrificar crecimiento por seguridad',
+      'Dificultad para invertir en ti mismo',
+    ],
+    recommendations: [
+      'Una vez tengas 6 meses de emergencia, invierte el excedente',
+      'Considera seguros como inversión, no solo gasto',
+      'Abre una cuenta de inversión para cada hijo',
+      'Destina 5% a inversiones de crecimiento',
+    ],
+    compatibleSigns: ['escorpio', 'piscis', 'tauro'],
+    avoidSigns: ['aries', 'libra'],
+  },
+  leo: {
+    name: 'Leo Financiero',
+    tagline: 'El Amante del Lujo',
+    emoji: '♌',
+    color: '#F4A261',
+    description:
+      'Te gusta disfrutar los frutos de tu trabajo. Inviertes en experiencias premium y bienes que proyecten éxito y status.',
+    characteristics: [
+      'Gastas en marcas premium y experiencias VIP',
+      'Te importa proyectar éxito financiero',
+      'Generoso con amigos y familia',
+      'Inviertes en tu imagen personal',
+    ],
+    strengths: [
+      'Motivación para ganar más',
+      'Confianza en tus decisiones financieras',
+      'Generosidad que crea conexiones',
+    ],
+    weaknesses: [
+      'Gastos excesivos en lujos innecesarios',
+      'Puede vivir por encima de sus posibilidades',
+      'Ego puede nublar juicio financiero',
+    ],
+    recommendations: [
+      'Implementa la regla 50/30/20 (necesidades/deseos/ahorro)',
+      'Cada lujo debe ser recompensa por meta de ahorro cumplida',
+      'Invierte en activos que generen ingresos pasivos',
+      'Automatiza ahorros antes de gastar',
+    ],
+    compatibleSigns: ['aries', 'sagitario', 'libra'],
+    avoidSigns: ['tauro', 'escorpio'],
+  },
+  virgo: {
+    name: 'Virgo Financiero',
+    tagline: 'El Maestro del Presupuesto',
+    emoji: '♍',
+    color: '#8B93FF',
+    description:
+      'Eres meticuloso y detallista con cada peso. Tienes presupuestos para todo y optimizas cada gasto al máximo.',
+    characteristics: [
+      'Tienes hojas de cálculo detalladas de gastos',
+      'Comparas precios obsesivamente',
+      'Planificas cada compra con anticipación',
+      'Analizas cada inversión exhaustivamente',
+    ],
+    strengths: [
+      'Control total sobre tus finanzas',
+      'Capacidad analítica superior',
+      'Optimización constante de gastos',
+    ],
+    weaknesses: [
+      'Puede perder tiempo en optimizaciones mínimas',
+      'Análisis parálisis en decisiones',
+      'Estrés por control excesivo',
+    ],
+    recommendations: [
+      'Automatiza el tracking con apps como Finerio',
+      'Establece un "margen de error" del 5% en presupuestos',
+      'Delega algunas decisiones financieras pequeñas',
+      'Invierte en fondos indexados para simplificar',
+    ],
+    compatibleSigns: ['tauro', 'capricornio', 'cancer'],
+    avoidSigns: ['geminis', 'sagitario'],
+  },
+  libra: {
+    name: 'Libra Financiero',
+    tagline: 'El Balanceador',
+    emoji: '♎',
+    color: '#E9C46A',
+    description:
+      'Buscas el equilibrio perfecto entre disfrutar hoy y ahorrar para mañana. Implementas la regla 50/30/20 naturalmente.',
+    characteristics: [
+      'Divides tu sueldo equitativamente',
+      'Buscas calidad-precio en todo',
+      'Evitas extremos financieros',
+      'Consultas antes de decisiones grandes',
+    ],
+    strengths: [
+      'Enfoque equilibrado y sostenible',
+      'Buena toma de decisiones consultada',
+      'Estabilidad financiera a largo plazo',
+    ],
+    weaknesses: [
+      'Indecisión en oportunidades urgentes',
+      'Puede quedar en zona de confort',
+      'Dificultad para tomar riesgos calculados',
+    ],
+    recommendations: [
+      'Mantén tu estrategia 50/30/20',
+      'Considera aumentar ahorro a 25% progresivamente',
+      'Explora inversiones de riesgo moderado',
+      'Usa robo-advisors para automatizar balance',
+    ],
+    compatibleSigns: ['geminis', 'acuario', 'leo'],
+    avoidSigns: ['cancer', 'capricornio'],
+  },
+  escorpio: {
+    name: 'Escorpio Financiero',
+    tagline: 'El Inversionista de Alto Riesgo',
+    emoji: '♏',
+    color: '#E63946',
+    description:
+      'Te atraen las inversiones intensas y de alto rendimiento. Crypto, startups, y trading son tu zona de confort.',
+    characteristics: [
+      'Inviertes en crypto y NFTs',
+      'Te gusta el trading activo',
+      'Buscas rendimientos superiores al 20%',
+      'Investigas profundamente antes de invertir',
+    ],
+    strengths: [
+      'Valentía para inversiones complejas',
+      'Investigación profunda y obsesiva',
+      'Potencial de altos rendimientos',
+    ],
+    weaknesses: [
+      'Excesiva exposición a riesgos',
+      'Puede perder grandes sumas',
+      'Estrés por volatilidad',
+    ],
+    recommendations: [
+      'Limita inversiones de alto riesgo a 20% del portafolio',
+      'Mantén 40% en inversiones conservadoras',
+      'Establece stop-loss automáticos',
+      'Diversifica incluso dentro de crypto',
+    ],
+    compatibleSigns: ['cancer', 'piscis', 'capricornio'],
+    avoidSigns: ['leo', 'acuario'],
+  },
+  sagitario: {
+    name: 'Sagitario Financiero',
+    tagline: 'El Viajero Eterno',
+    emoji: '♐',
+    color: '#9B59B6',
+    description:
+      'Vives para las experiencias y los viajes. Tu dinero se va principalmente en explorar el mundo y culturas nuevas.',
+    characteristics: [
+      'Priorizas viajes sobre ahorros',
+      'Inviertes en experiencias culturales',
+      'Tienes múltiples suscripciones de viaje',
+      'Gastas en educación y crecimiento personal',
+    ],
+    strengths: [
+      'Inviertes en experiencias valiosas',
+      'Mentalidad de abundancia',
+      'Networking internacional',
+    ],
+    weaknesses: [
+      'Poco ahorro a largo plazo',
+      'Gastos excesivos en viajes',
+      'Falta de estabilidad financiera',
+    ],
+    recommendations: [
+      'Abre una cuenta separada "Fondo de Viajes"',
+      'Automatiza ahorro del 15% antes de destinar a viajes',
+      'Usa tarjetas con millas y recompensas',
+      'Considera trabajo remoto para reducir costos de viaje',
+    ],
+    compatibleSigns: ['aries', 'leo', 'acuario'],
+    avoidSigns: ['virgo', 'tauro'],
+  },
+  capricornio: {
+    name: 'Capricornio Financiero',
+    tagline: 'El Planificador Maestro',
+    emoji: '♑',
+    color: '#2A9D8F',
+    description:
+      'Tu visión está puesta en el futuro lejano. Planificas tu retiro desde joven y cada decisión se alinea con metas a 10-20 años.',
+    characteristics: [
+      'Tienes un plan financiero a 30 años',
+      'Maximas aportaciones a retiro',
+      'Sacrificas presente por futuro',
+      'Inviertes en educación financiera constantemente',
+    ],
+    strengths: [
+      'Disciplina inquebrantable',
+      'Visión de largo plazo excepcional',
+      'Retiro asegurado desde joven',
+    ],
+    weaknesses: [
+      'Puede ser demasiado austero',
+      'Dificultad para disfrutar el presente',
+      'Rigidez en planes ante cambios',
+    ],
+    recommendations: [
+      'Destina 5% a "disfrutar el presente"',
+      'Permite flexibilidad del 10% en tu plan',
+      'Celebra hitos financieros con pequeños lujos',
+      'Revisa tu plan cada 6 meses para ajustar',
+    ],
+    compatibleSigns: ['tauro', 'virgo', 'escorpio'],
+    avoidSigns: ['libra', 'geminis'],
+  },
+  acuario: {
+    name: 'Acuario Financiero',
+    tagline: 'El Innovador Ético',
+    emoji: '♒',
+    color: '#4ECDC4',
+    description:
+      'Tus inversiones reflejan tus valores. Te interesan las inversiones éticas, sustentables e innovadoras que cambien el mundo.',
+    characteristics: [
+      'Inviertes en empresas sustentables',
+      'Te interesan tecnologías disruptivas',
+      'Consideras impacto social de tus inversiones',
+      'Apoyas causas con tu dinero',
+    ],
+    strengths: [
+      'Portafolio alineado con valores',
+      'Visión futurista de mercados',
+      'Impacto positivo con tu dinero',
+    ],
+    weaknesses: [
+      'Puede ignorar rendimientos por ideología',
+      'Inversiones muy nicho',
+      'Riesgo en tecnologías no probadas',
+    ],
+    recommendations: [
+      'Balancea 70% inversiones tradicionales, 30% innovadoras',
+      'Explora ESG funds y green bonds',
+      'Invierte en startups de impacto social',
+      'Usa plataformas como Kiva para microcréditos',
+    ],
+    compatibleSigns: ['geminis', 'libra', 'sagitario'],
+    avoidSigns: ['tauro', 'escorpio'],
+  },
+  piscis: {
+    name: 'Piscis Financiero',
+    tagline: 'El Generoso Soñador',
+    emoji: '♓',
+    color: '#B19CD9',
+    description:
+      'Tu corazón generoso te lleva a compartir tu riqueza. Apoyas a familia, donas a causas y a veces pones las necesidades de otros antes que las tuyas.',
+    characteristics: [
+      'Donas regularmente a caridad',
+      'Ayudas económicamente a familia',
+      'Retail therapy cuando estás triste',
+      'Dificultad para decir no a préstamos',
+    ],
+    strengths: [
+      'Generosidad que crea abundancia',
+      'Empatía financiera',
+      'Networking por relaciones genuinas',
+    ],
+    weaknesses: [
+      'Puede descuidar su propio futuro',
+      'Tendencia a prestar sin recuperar',
+      'Compras emocionales frecuentes',
+    ],
+    recommendations: [
+      'Establece límites claros en ayuda familiar (max 10% ingreso)',
+      'Automatiza ahorro del 20% antes de ayudar a otros',
+      'Dona de forma estructurada (padrino mensual vs impulsos)',
+      'Solo presta lo que puedes regalar',
+    ],
+    compatibleSigns: ['cancer', 'escorpio', 'tauro'],
+    avoidSigns: ['geminis', 'sagitario'],
+  },
+};

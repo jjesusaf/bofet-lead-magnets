@@ -1,0 +1,18 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import { ResultView } from '../components/quiz/ResultView';
+import '../styles/global.css';
+
+const title = "Tu Signo Financiero - Resultado";
+const description = "Descubre tu perfil financiero completo";
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+  <body>
+    <ResultView client:load />
+  </body>
+</html>

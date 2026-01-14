@@ -1,49 +1,59 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { Quiz } from '../components/quiz/Quiz';
+import '../styles/global.css';
+
+const title = "Descubre tu Signo Financiero";
+const description = "Responde 12 preguntas y descubre qué tipo de personalidad financiera tienes";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={title} description={description} />
 	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+	<body class="bg-background">
+		<main class="min-h-screen">
+			<!-- Hero Section -->
+			<div class="border-b bg-white/50 backdrop-blur-sm">
+				<div class="max-w-7xl mx-auto px-8 py-3">
+					<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+						<!-- Left: Title -->
+						<div class="flex-1">
+							<h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-3 text-[#6F737F]">
+								¿Cuál es tu<br />
+								<span style="color: #6F737F;">Signo Financiero?</span>
+							</h1>
+							<p class="text-lg text-muted-foreground max-w-xl">
+								Descubre tu personalidad financiera respondiendo 12 preguntas
+							</p>
+						</div>
+
+						<!-- Right: Instructions -->
+						<div class="flex-shrink-0 bg-background rounded-xl p-6 border border-border max-w-md">
+							<h3 class="font-semibold text-foreground mb-3">
+								Instrucciones
+							</h3>
+							<ul class="space-y-2 text-sm text-muted-foreground">
+								<li class="flex items-start gap-2">
+									<span class="mt-0.5">1.</span>
+									<span>Responde todas las preguntas con honestidad</span>
+								</li>
+								<li class="flex items-start gap-2">
+									<span class="mt-0.5">2.</span>
+									<span>No hay respuestas correctas o incorrectas</span>
+								</li>
+								<li class="flex items-start gap-2">
+									<span class="mt-0.5">3.</span>
+									<span>Al finalizar, obtendrás tu perfil y recomendaciones</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<Quiz client:load />
 		</main>
-		<Footer />
 	</body>
 </html>
